@@ -1,2 +1,2 @@
 # Gruppe5Eksamen
-Lavet af Matias,
+Lavet af Matias, Simon
