@@ -1,2 +1,2 @@
 # Gruppe5Eksamen
-Lavet af Matias, Simon, Lukas
+Lavet af Matias, Simon, Lukas og Laila
