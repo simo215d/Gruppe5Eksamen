@@ -1,5 +1,6 @@
-package entities;
-import entities.exceptions.IntetNavnException;
+package model.datastrukture;
+import model.datastrukture.Behandler;
+import model.exceptions.IntetNavnException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

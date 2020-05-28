@@ -1,6 +1,6 @@
-package entities;
+package model.datastrukture;
 
-import entities.exceptions.IntetNavnException;
+import model.exceptions.IntetNavnException;
 
 public class Behandler {
     private String navn;

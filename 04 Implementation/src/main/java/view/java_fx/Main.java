@@ -1,4 +1,4 @@
-package ui.java_fx;
+package view.java_fx;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

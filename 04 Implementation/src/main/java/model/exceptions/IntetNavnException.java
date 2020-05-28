@@ -1,4 +1,4 @@
-package entities.exceptions;
+package model.exceptions;
 
 public class IntetNavnException extends Exception{
 
