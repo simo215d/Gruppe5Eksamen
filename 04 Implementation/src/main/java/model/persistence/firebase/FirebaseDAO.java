@@ -14,7 +14,6 @@ import model.exceptions.PatientErAlleredeIForloebException;
 import model.exceptions.PatientManglerException;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +29,18 @@ public class FirebaseDAO {
         // Hvis ikke vi har en connection til databasen så bliver den oprettet her.
         if (this.db == null) {
             this.db = hentDatabase();
+            System.out.println("Database er hentet");
+            System.out.println(this.db);
         }
+        //behandler.getNavn() + patient.getNavn()
         // Sådan opretter man et forløb til firestore.
         Forloeb forloeb = new Forloeb(behandler, patient);
-        CollectionReference cr = db.collection("Forloeb");
-        DocumentReference document = cr.document(behandler.getNavn() + patient.getNavn());
-        document.set(forloeb);
+        forloeb.setBehandler("kurt");
+        forloeb.setPatient("grette");
+//        CollectionReference cr = db.collection("Forloeb");
+//        DocumentReference document = cr.document(behandler.getNavn() + patient.getNavn());
+//        document.set(forloeb);
+            db.collection("Forloeb").document("Behandler@gmail.comPatient@gmail.com").set(forloeb);
         // Patientens status om at være i et forløb sættet til at være sand og ændring uploades til databasen.
         patient.setErIForloeb(true);
         CollectionReference crp = db.collection("Patienter");
@@ -43,22 +48,22 @@ public class FirebaseDAO {
         patientDocument.set(patient);
     }
 
-    public ArrayList<Patient> hentPatienter(boolean b) throws ExecutionException, InterruptedException {
-        // Her laver vi et Arraylist og bruger databasen til at finde alle patienter som enten er, eller ikke er i et forløb.
-        ArrayList<Patient> patienter = new ArrayList<>();
+    public ArrayList<Patient> hentPatienter(boolean erIForloeb) throws ExecutionException, InterruptedException {
+        // Her bruger vi databasen til at finde alle patienter som enten er, eller ikke er i et forløb baseret på parametret.
         CollectionReference cr = db.collection("Patienter");
-        Query query = cr.whereEqualTo("erIForloeb",b);
+        Query query = cr.whereEqualTo("erIForloeb",erIForloeb);
         ApiFuture<QuerySnapshot> futureQuery = query.get();
         List<DocumentSnapshot> documents = futureQuery.get().getDocuments();
-        // Her tilføjer vi patienterne til arraylisten en efter en, efter at vi har tjekket om de er i et forløb eller ej.
-        for (DocumentSnapshot next : documents) {
-            patienter.add(next.toObject(Patient.class));
+        // Her laver vi en arraylist og tilføjer patienterne til arraylisten en efter en.
+        ArrayList<Patient> patienter = new ArrayList<>();
+        for (DocumentSnapshot document : documents) {
+            patienter.add(document.toObject(Patient.class));
         }
         return patienter;
     }
 
     private Firestore hentDatabase() throws IOException {
-        FileInputStream serviceAccount = new FileInputStream("./fir-demo-bfec6-firebase-adminsdk-rmxrg-8ef1361333.json");
+        FileInputStream serviceAccount = new FileInputStream("src\\main\\java\\model\\persistence\\firebase\\g5fysioterapieksamen-firebase-adminsdk-ypwml-f40ac2d840.json");
         FirebaseOptions options = new FirebaseOptions.Builder().
                 setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();

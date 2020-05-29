@@ -1,8 +1,10 @@
 package model.persistence;
 
 import model.datastrukture.Behandler;
+import model.datastrukture.Forloeb;
 import model.datastrukture.Patient;
 import model.exceptions.BehandlerManglerException;
+import model.exceptions.IntetNavnException;
 import model.exceptions.PatientErAlleredeIForloebException;
 import model.exceptions.PatientManglerException;
 import model.persistence.firebase.FirebaseDAO;
@@ -30,13 +32,17 @@ public class FirebaseDAOTest {
     @Test
     void Test03() {
         FirebaseDAO firebaseDAO = new FirebaseDAO();
-        assertThrows(BehandlerManglerException.class,() -> firebaseDAO.opretForloeb(null, null));
+        assertThrows(PatientManglerException.class,() -> firebaseDAO.opretForloeb(null, null));
     }
 
     @Test
-    void Test04() throws PatientManglerException, BehandlerManglerException, IOException, PatientErAlleredeIForloebException {
+    void Test04() throws PatientManglerException, BehandlerManglerException, IOException, PatientErAlleredeIForloebException, IntetNavnException {
         FirebaseDAO firebaseDAO = new FirebaseDAO();
-        firebaseDAO.opretForloeb(new Behandler(), new Patient());
+        Patient patient = new Patient();
+        Behandler behandler = new Behandler();
+        patient.setNavn("grette");
+        behandler.setNavn("jens");
+        firebaseDAO.opretForloeb(behandler, patient);
     }
 
     @Test
