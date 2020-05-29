@@ -2,8 +2,9 @@ package model.datastrukture;
 
 import model.exceptions.IntetNavnException;
 
-public class Behandler {
+public class Patient {
     private String navn;
+    private boolean erIForloeb;
     private String email;
 
     public String getEmail() {
@@ -22,5 +23,13 @@ public class Behandler {
 
     public String getNavn() {
         return navn;
+    }
+
+    public void setErIForloeb(boolean b) {
+        this.erIForloeb = b;
+    }
+
+    public boolean getErIForloeb() {
+        return erIForloeb;
     }
 }
