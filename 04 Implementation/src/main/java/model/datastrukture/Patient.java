@@ -5,6 +5,15 @@ import model.exceptions.IntetNavnException;
 public class Patient {
     private String navn;
     private boolean erIForloeb;
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public void setNavn(String navn) throws IntetNavnException {
         if (navn == null) throw new NullPointerException(){};

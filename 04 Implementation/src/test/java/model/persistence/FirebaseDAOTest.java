@@ -1,7 +1,6 @@
 package model.persistence;
 
 import model.datastrukture.Behandler;
-import model.datastrukture.Forloeb;
 import model.datastrukture.Patient;
 import model.exceptions.BehandlerManglerException;
 import model.exceptions.IntetNavnException;
@@ -36,17 +35,19 @@ public class FirebaseDAOTest {
     }
 
     @Test
-    void Test04() throws PatientManglerException, BehandlerManglerException, IOException, PatientErAlleredeIForloebException, IntetNavnException {
+    void Test04() throws PatientManglerException, BehandlerManglerException, IOException, PatientErAlleredeIForloebException, IntetNavnException, ExecutionException, InterruptedException {
         FirebaseDAO firebaseDAO = new FirebaseDAO();
         Patient patient = new Patient();
         Behandler behandler = new Behandler();
         patient.setNavn("grette");
-        behandler.setNavn("jens");
+        behandler.setNavn("simon");
+        patient.setEmail("grette@gmail.com");
+        behandler.setEmail("simon@gmail.com");
         firebaseDAO.opretForloeb(behandler, patient);
     }
 
     @Test
-    void Test05() throws ExecutionException, InterruptedException {
+    void Test05() throws ExecutionException, InterruptedException, IOException {
         FirebaseDAO firebaseDAO = new FirebaseDAO();
         ArrayList<Patient> patienter = new ArrayList<Patient>();
         patienter = firebaseDAO.hentPatienter(true);
@@ -56,12 +57,19 @@ public class FirebaseDAOTest {
     }
 
     @Test
-    void Test06() throws ExecutionException, InterruptedException {
+    void Test06() throws ExecutionException, InterruptedException, IOException {
         FirebaseDAO firebaseDAO = new FirebaseDAO();
         ArrayList<Patient> patienter = new ArrayList<Patient>();
         patienter = firebaseDAO.hentPatienter(false);
         for (Patient patient : patienter) {
             assertFalse(patient.getErIForloeb());
         }
+    }
+
+    @Test
+    void Test07() throws InterruptedException, ExecutionException, IOException {
+        FirebaseDAO firebaseDAO = new FirebaseDAO();
+        ArrayList<Behandler> behandlere = new ArrayList<Behandler>();
+        behandlere = firebaseDAO.hentBehandlere();
     }
 }

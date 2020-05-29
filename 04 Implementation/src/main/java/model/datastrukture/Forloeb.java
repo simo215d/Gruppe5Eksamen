@@ -1,27 +1,27 @@
 package model.datastrukture;
 
 public class Forloeb {
-    private String behandler;
-    private String patient;
+    private String behandlerEmail;
+    private String patientEmail;
 
     public Forloeb(Behandler behandler, Patient patient){
-        this.behandler = behandler.getNavn();
-        this.patient = patient.getNavn();
+        this.behandlerEmail = behandler.getEmail();
+        this.patientEmail = patient.getEmail();
     }
 
-    public String getBehandler() {
-        return behandler;
+    public String getBehandlerEmail() {
+        return behandlerEmail;
     }
 
-    public void setBehandler(String behandler) {
-        this.behandler = behandler;
+    public void setBehandlerEmail(String behandlerEmail) {
+        this.behandlerEmail = behandlerEmail;
     }
 
-    public String getPatient() {
-        return patient;
+    public String getPatientEmail() {
+        return patientEmail;
     }
 
-    public void setPatient(String patient) {
-        this.patient = patient;
+    public void setPatientEmail(String patientEmail) {
+        this.patientEmail = patientEmail;
     }
 }
