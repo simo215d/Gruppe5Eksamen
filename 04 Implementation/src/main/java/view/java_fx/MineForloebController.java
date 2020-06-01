@@ -6,11 +6,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.datastrukture.Patient;
 import model.persistence.firebase.FirebaseDAO;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class MineForloebController {
+public class MineForloebController extends MenuController {
 
     @FXML
     private TableView<Patient> TableViewForloeb;
