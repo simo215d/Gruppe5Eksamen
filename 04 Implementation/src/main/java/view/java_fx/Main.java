@@ -1,9 +1,12 @@
 package view.java_fx;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class Main extends Application {
 
@@ -12,9 +15,9 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
-        Scene scene = new Scene(new Label("LOL"),100,100);
-        primaryStage.setScene(scene);
+    public void start(Stage primaryStage) throws IOException {
+        Parent root = new FXMLLoader(getClass().getResource("/view/java_fx/Forside.fxml")).load();
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 }

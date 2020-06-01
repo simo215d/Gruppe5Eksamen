@@ -77,8 +77,23 @@ public class FirebaseDAO implements DAO {
         return behandlere;
     }
 
+    public ArrayList<Patient> hentForloeb(Behandler behandler) throws IOException, ExecutionException, InterruptedException {
+        if (this.db == null) {
+            this.db = hentDatabase();
+        }
+        CollectionReference cr = db.collection("Forloeb");
+        Query query = cr.whereEqualTo("behandler", behandler);
+        ApiFuture<QuerySnapshot> futureQuery = query.get();
+        List<DocumentSnapshot> documents = futureQuery.get().getDocuments();
+        ArrayList<Patient> patienter = new ArrayList<>();
+        for (DocumentSnapshot document : documents) {
+            patienter.add(document.toObject(Patient.class));
+        }
+        return patienter;
+    }
+
     private Firestore hentDatabase() throws IOException {
-        FileInputStream serviceAccount = new FileInputStream("src\\main\\java\\model\\persistence\\firebase\\g5fysioterapieksamen-firebase-adminsdk-ypwml-f40ac2d840.json");
+        FileInputStream serviceAccount = new FileInputStream("src/main/java/model/persistence/firebase/ServiceAccountKey.json");
         FirebaseOptions options = new FirebaseOptions.Builder().
                 setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();
