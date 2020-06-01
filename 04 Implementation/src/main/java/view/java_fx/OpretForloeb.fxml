@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane id="bigdaddy" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="bigdaddy" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.java_fx.OpretForloebController">
    <children>
       <ImageView id="headerimage" fitHeight="42.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" />
       <VBox id="menuvbox" layoutY="40.0" prefHeight="361.0" prefWidth="120.0">
@@ -27,6 +26,6 @@
       <ComboBox id="behandlercombobox" layoutX="367.0" layoutY="229.0" prefHeight="25.0" prefWidth="130.0" />
       <Label id="patientlabel" layoutX="189.0" layoutY="192.0" text="Patient" />
       <Label id="behandlerlabel" layoutX="367.0" layoutY="192.0" text="Behandler" />
-      <Button id="opretforloebbtn" layoutX="300.0" layoutY="322.0" mnemonicParsing="false" text="Opret forløb" />
+      <Button id="opretforloebbtn" onAction="#opretForloeb" layoutX="300.0" layoutY="322.0" mnemonicParsing="false" text="Opret forløb" />
    </children>
 </AnchorPane>

@@ -78,7 +78,7 @@ public class FirebaseDAO implements DAO {
     }
 
     private Firestore hentDatabase() throws IOException {
-        FileInputStream serviceAccount = new FileInputStream("src\\main\\java\\model\\persistence\\firebase\\g5fysioterapieksamen-firebase-adminsdk-ypwml-f40ac2d840.json");
+        FileInputStream serviceAccount = new FileInputStream("src/main/java/model/persistence/firebase/ServiceAccountKey.json");
         FirebaseOptions options = new FirebaseOptions.Builder().
                 setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();
