@@ -23,8 +23,7 @@ public class MineForloebController extends MenuController {
     private TableColumn<Patient, String> NavnView;
 
     public void ListViewForloeb() throws InterruptedException, ExecutionException, IOException {
-        FirebaseDAO firebaseDAO = new FirebaseDAO();
-        ArrayList<Patient> list = firebaseDAO.hentPatienter(true);
+        ArrayList<Patient> list = Main.viewModel.hentPatienter(true);
         EmailView.setCellValueFactory(new PropertyValueFactory<>("email"));
         NavnView.setCellValueFactory(new PropertyValueFactory<>("navn"));
         TableViewForloeb.getItems().addAll(list);
