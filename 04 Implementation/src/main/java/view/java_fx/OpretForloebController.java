@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class OpretForloebController extends MenuController {
-    private FirebaseDAO firebaseDAO;
     private Main main;
     private Stage stage;
     //fxml elements
@@ -23,9 +22,6 @@ public class OpretForloebController extends MenuController {
     private ArrayList<Patient> patienter;
 
     public void load(Main main, Stage stage){
-        if (firebaseDAO==null){
-            firebaseDAO = new FirebaseDAO();
-        }
         //setting references
         this.stage=stage;
         this.main = main;
@@ -40,7 +36,7 @@ public class OpretForloebController extends MenuController {
     private void setBehandlere() {
         try {
             //behandlere = main.getFirebaseDAO().hentBehandlere();
-            behandlere = firebaseDAO.hentBehandlere();
+            behandlere = Main.viewModel.hentBehandlere();
             for (Behandler behandler : behandlere){
                 System.out.println("BEHANDLER LOADED: "+behandler.getEmail());
                 behandlercombobox.getItems().add(behandler.getNavn());
@@ -54,7 +50,7 @@ public class OpretForloebController extends MenuController {
     private void setPatienter(){
         try {
             //patienter = main.getFirebaseDAO().hentPatienter(false);
-            patienter = firebaseDAO.hentPatienter(false);
+            patienter = Main.viewModel.hentPatienter(false);
             for (Patient patient : patienter){
                 System.out.println("PATIENT LOADED: "+patient.getEmail());
                 patientcombobox.getItems().add(patient.getNavn());
@@ -68,7 +64,7 @@ public class OpretForloebController extends MenuController {
     public void opretForloeb(ActionEvent event) throws IOException {
         System.out.println("Behandler: "+behandlere.get(behandlercombobox.getSelectionModel().getSelectedIndex()).getNavn()+" Patient: "+patienter.get(patientcombobox.getSelectionModel().getSelectedIndex()).getNavn());
         try {
-            firebaseDAO.opretForloeb(behandlere.get(behandlercombobox.getSelectionModel().getSelectedIndex()), patienter.get(patientcombobox.getSelectionModel().getSelectedIndex()));
+            Main.viewModel.opretForloeb(behandlere.get(behandlercombobox.getSelectionModel().getSelectedIndex()), patienter.get(patientcombobox.getSelectionModel().getSelectedIndex()));
             System.out.println("successfuldt oprettet forløb!");
             //back to front page
             main.start(stage);
