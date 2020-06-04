@@ -1,6 +1,7 @@
 package model.persistence;
 
 import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Firestore;
 import model.datastrukture.*;
 import model.exceptions.BehandlerManglerException;
 import model.exceptions.IntetNavnException;
@@ -71,8 +72,14 @@ public class FirebaseDAOImplTest {
         ArrayList<Behandler> behandlere = new ArrayList<Behandler>();
         behandlere = firebaseDAO.hentBehandlere();
         for (Behandler behandler : behandlere) {
-            assertTrue(behandler instanceof Behandler);
+            assertNotNull(behandler);
         }
+    }
+
+    @Test
+    void Test07() throws IOException {
+        MockFirebaseDAOImpl firebaseDAO = new MockFirebaseDAOImpl();
+        assertNotNull(firebaseDAO.hentDatabase());
     }
 
     private class MockFirebaseDAOImpl extends FirebaseDAOImpl{

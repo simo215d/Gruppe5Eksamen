@@ -120,7 +120,7 @@ public class FirebaseDAOImpl implements DAO {
         return documentSnapshot.toObject(ForloebImpl.class);
     }
 
-    private Firestore hentDatabase() throws IOException {
+    public Firestore hentDatabase() throws IOException {
         FileInputStream serviceAccount = new FileInputStream("C:\\Users\\matia\\OneDrive\\Dokumenter\\GitHub\\Gruppe5Eksamen\\04 Implementation\\src\\main\\java\\persistence\\firebase\\ServiceAccountKey.json");
         FirebaseOptions options = new FirebaseOptions.Builder().
                 setCredentials(GoogleCredentials.fromStream(serviceAccount))
