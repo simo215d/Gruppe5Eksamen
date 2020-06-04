@@ -1,25 +1,22 @@
 package viewModel;
 
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.*;
 import model.datastrukture.Behandler;
-import model.datastrukture.Forloeb;
 import model.datastrukture.Patient;
 import model.exceptions.BehandlerManglerException;
 import model.exceptions.PatientErAlleredeIForloebException;
 import model.exceptions.PatientManglerException;
-import model.persistence.firebase.FirebaseDAO;
+import persistence.DAO;
+import persistence.firebase.FirebaseDAOImpl;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class ViewModel {
-    private FirebaseDAO firebaseDAO;
+    private DAO firebaseDAO;
 
     public ViewModel() {
-        firebaseDAO = new FirebaseDAO();
+        firebaseDAO = new FirebaseDAOImpl();
     }
 
     public void opretForloeb(Behandler behandler, Patient patient){
