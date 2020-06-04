@@ -1,4 +1,4 @@
-package model.persistence.firebase;
+package persistence.firebase;
 
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -6,13 +6,11 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
-import model.datastrukture.Behandler;
-import model.datastrukture.Forloeb;
-import model.datastrukture.Patient;
+import model.datastrukture.*;
 import model.exceptions.BehandlerManglerException;
 import model.exceptions.PatientErAlleredeIForloebException;
 import model.exceptions.PatientManglerException;
-import model.persistence.DAO;
+import persistence.DAO;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -20,9 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class FirebaseDAO implements DAO {
+public class FirebaseDAOImpl implements DAO {
     private Firestore db;
-    public void opretForloeb(Behandler behandler, Patient patient) throws BehandlerManglerException, PatientManglerException, IOException, PatientErAlleredeIForloebException, ExecutionException, InterruptedException {
+    @Override
+    public void opretForloeb(Behandler behandler, Patient patient) throws BehandlerManglerException,
+            PatientManglerException, IOException, PatientErAlleredeIForloebException,
+            ExecutionException, InterruptedException {
         // Her fanges mulige fejl.
         if (patient == null) throw new PatientManglerException(){};
         if (behandler == null) throw new BehandlerManglerException(){};
@@ -31,9 +32,8 @@ public class FirebaseDAO implements DAO {
         if (this.db == null) {
             this.db = hentDatabase();
         }
-        //behandler.getNavn() + patient.getNavn()
         // Sådan opretter man et forløb til firestore.
-        Forloeb forloeb = new Forloeb(behandler, patient);
+        Forloeb forloeb = newForloeb(behandler,patient);
         CollectionReference cr = db.collection("Forloeb");
         DocumentReference document = cr.document(behandler.getEmail() + patient.getEmail());
         document.set(forloeb).get();
@@ -44,6 +44,12 @@ public class FirebaseDAO implements DAO {
         patientDocument.set(patient);
     }
 
+    @Override
+    public Forloeb newForloeb(Behandler behandler, Patient patient) {
+        return new ForloebImpl(behandler, patient);
+    }
+
+    @Override
     public ArrayList<Patient> hentPatienter(boolean erIForloeb) throws ExecutionException, InterruptedException, IOException {
         if (this.db == null) {
             this.db = hentDatabase();
@@ -56,11 +62,12 @@ public class FirebaseDAO implements DAO {
         // Her laver vi en arraylist og tilføjer patienterne til arraylisten en efter en.
         ArrayList<Patient> patienter = new ArrayList<>();
         for (DocumentSnapshot document : documents) {
-            patienter.add(document.toObject(Patient.class));
+            patienter.add(document.toObject(PatientImpl.class));
         }
         return patienter;
     }
 
+    @Override
     public ArrayList<Behandler> hentBehandlere() throws ExecutionException, InterruptedException, IOException {
         if (this.db == null) {
             this.db = hentDatabase();
@@ -72,11 +79,12 @@ public class FirebaseDAO implements DAO {
         // Her laver vi en arraylist og tilføjer patienterne til arraylisten en efter en.
         ArrayList<Behandler> behandlere = new ArrayList<>();
         for (DocumentSnapshot document : documents) {
-            behandlere.add(document.toObject(Behandler.class));
+            behandlere.add(document.toObject(BehandlerImpl.class));
         }
         return behandlere;
     }
 
+    @Override
     public ArrayList<Patient> hentForloeb(Behandler behandler) throws IOException, ExecutionException, InterruptedException {
         if (this.db == null) {
             this.db = hentDatabase();
@@ -87,13 +95,33 @@ public class FirebaseDAO implements DAO {
         List<DocumentSnapshot> documents = futureQuery.get().getDocuments();
         ArrayList<Patient> patienter = new ArrayList<>();
         for (DocumentSnapshot document : documents) {
-            patienter.add(document.toObject(Patient.class));
+            patienter.add(document.toObject(PatientImpl.class));
         }
         return patienter;
     }
 
+    @Override
+    public Forloeb hentForloeb(Patient patient) throws IOException, ExecutionException, InterruptedException {
+        if (this.db == null) {
+            this.db = hentDatabase();
+        }
+        CollectionReference cr = db.collection("Forloeb");
+        Query query = cr.whereEqualTo("patientEmail", patient.getEmail());
+        ApiFuture<QuerySnapshot> futureQuery = query.get();
+        List<DocumentSnapshot> documents = futureQuery.get().getDocuments();
+        ArrayList<Forloeb> forloeb = new ArrayList<>();
+        for (DocumentSnapshot document : documents) {
+            forloeb.add(castDocumentSnapshotToForloeb(document));
+        }
+        return forloeb.get(0);
+    }
+
+    public Forloeb castDocumentSnapshotToForloeb(DocumentSnapshot documentSnapshot){
+        return documentSnapshot.toObject(ForloebImpl.class);
+    }
+
     private Firestore hentDatabase() throws IOException {
-        FileInputStream serviceAccount = new FileInputStream("src/main/java/model/persistence/firebase/ServiceAccountKey.json");
+        FileInputStream serviceAccount = new FileInputStream("C:\\Users\\matia\\OneDrive\\Dokumenter\\GitHub\\Gruppe5Eksamen\\04 Implementation\\src\\main\\java\\persistence\\firebase\\ServiceAccountKey.json");
         FirebaseOptions options = new FirebaseOptions.Builder().
                 setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();

@@ -1,13 +1,12 @@
 package view.java_fx;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import model.datastrukture.Behandler;
+import model.datastrukture.BehandlerImpl;
 import model.datastrukture.Patient;
-import model.persistence.firebase.FirebaseDAO;
+import model.datastrukture.PatientImpl;
 
 import java.io.IOException;
 import java.util.ArrayList;

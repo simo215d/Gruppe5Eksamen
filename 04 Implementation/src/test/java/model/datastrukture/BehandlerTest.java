@@ -1,5 +1,4 @@
 package model.datastrukture;
-import model.datastrukture.Behandler;
 import model.exceptions.IntetNavnException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,19 +6,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class BehandlerTest {
     @Test
     void Test01() {
-        Behandler behandler = new Behandler();
+        BehandlerImpl behandler = new BehandlerImpl();
         assertThrows(NullPointerException.class, () -> behandler.setNavn(null));
     }
 
     @Test
     void Test02() {
-        Behandler behandler = new Behandler();
+        BehandlerImpl behandler = new BehandlerImpl();
         assertThrows(IntetNavnException.class, () -> behandler.setNavn(""));
     }
 
     @Test
     void Test03() throws IntetNavnException {
-        Behandler behandler = new Behandler();
+        BehandlerImpl behandler = new BehandlerImpl();
         behandler.setNavn("Anton");
         assertEquals("Anton", behandler.getNavn());
     }

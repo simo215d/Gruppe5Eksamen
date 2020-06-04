@@ -4,9 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.datastrukture.Patient;
-import model.persistence.firebase.FirebaseDAO;
+import model.datastrukture.PatientImpl;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;

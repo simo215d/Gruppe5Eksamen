@@ -1,17 +1,11 @@
 package view.java_fx;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.persistence.firebase.FirebaseDAO;
 import viewModel.ViewModel;
-
-import java.io.IOException;
 
 import java.io.IOException;
 
