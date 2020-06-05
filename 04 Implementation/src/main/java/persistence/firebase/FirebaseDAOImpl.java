@@ -12,8 +12,8 @@ import model.exceptions.PatientErAlleredeIForloebException;
 import model.exceptions.PatientManglerException;
 import persistence.DAO;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -121,7 +121,7 @@ public class FirebaseDAOImpl implements DAO {
     }
 
     public Firestore hentDatabase() throws IOException {
-        FileInputStream serviceAccount = new FileInputStream("C:\\Users\\matia\\OneDrive\\Dokumenter\\GitHub\\Gruppe5Eksamen\\04 Implementation\\src\\main\\java\\persistence\\firebase\\ServiceAccountKey.json");
+        InputStream serviceAccount = getClass().getResourceAsStream("/persistence/firebase/ServiceAccountKey.json");
         FirebaseOptions options = new FirebaseOptions.Builder().
                 setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();
