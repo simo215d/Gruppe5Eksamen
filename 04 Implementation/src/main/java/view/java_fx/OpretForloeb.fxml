@@ -7,9 +7,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.image.Image?>
 <AnchorPane id="bigdaddy" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.java_fx.OpretForloebController">
    <children>
-      <ImageView id="headerimage" fitHeight="42.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView id="headerimage" fitHeight="42.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="https://user-images.githubusercontent.com/54975711/83849981-8d4a6600-a710-11ea-8766-53cbc45e50a5.png" />
+      </ImageView>
       <VBox id="menuvbox" layoutY="40.0" prefHeight="361.0" prefWidth="120.0">
          <children>
             <Button id="forsidebtn" onAction="#forside" mnemonicParsing="false" prefHeight="26.0" prefWidth="137.0" text="Forside" />

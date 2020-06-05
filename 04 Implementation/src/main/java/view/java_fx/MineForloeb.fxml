@@ -18,7 +18,9 @@
          </children>
        </VBox>
       <Label id="behandlersForloeb" fx:id="behandlersForloeb" layoutX="153.0" layoutY="71.0" text="Christians Forløb" />
-      <ImageView id="headerimage" fitHeight="42.0" fitWidth="600.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="361.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+       <ImageView id="headerimage" fitHeight="42.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+           <Image url="https://user-images.githubusercontent.com/54975711/83849981-8d4a6600-a710-11ea-8766-53cbc45e50a5.png" />
+       </ImageView>
       <TableView id="TableViewForloeb" fx:id="TableViewForloeb" layoutX="153.0" layoutY="108.0" prefHeight="249.0" prefWidth="391.0">
         <columns>
           <TableColumn id="NavnView" fx:id="NavnView" prefWidth="192.0" text="Navn" />
