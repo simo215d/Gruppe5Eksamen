@@ -8,7 +8,9 @@
 <AnchorPane id="bigdaddy" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.java_fx.ForsideController">
 
    <children>
-      <ImageView id="headerimage" fitHeight="42.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView id="headerimage" fitHeight="42.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="https://user-images.githubusercontent.com/54975711/83849981-8d4a6600-a710-11ea-8766-53cbc45e50a5.png" />
+      </ImageView>
       <Label id="titlelabel" layoutX="166.0" layoutY="89.0" prefHeight="127.0" prefWidth="347.0" text="Frederiksberg Sportsklinik">
          <font>
             <Font size="26.0" />
