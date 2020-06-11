@@ -44,6 +44,7 @@ public class FirebaseDAOImpl implements DAO {
         patientDocument.set(patient);
     }
 
+    //denne metode eksistere for at gøre de muligt, at unit teste denne klasse uden at have afhængighed til BehandlerImpl eller PatientImpl
     @Override
     public Forloeb newForloeb(Behandler behandler, Patient patient) {
         return new ForloebImpl(behandler, patient);
@@ -89,10 +90,12 @@ public class FirebaseDAOImpl implements DAO {
         if (this.db == null) {
             this.db = hentDatabase();
         }
+        //vi henter vores forloeb collection og en query af alle de forloeb som har en behandler som matcher vores parameter
         CollectionReference cr = db.collection("Forloeb");
         Query query = cr.whereEqualTo("behandler", behandler);
         ApiFuture<QuerySnapshot> futureQuery = query.get();
         List<DocumentSnapshot> documents = futureQuery.get().getDocuments();
+        //vi laver nu en liste af de patienter som findes i de forloeb som matchede behandleren
         ArrayList<Patient> patienter = new ArrayList<>();
         for (DocumentSnapshot document : documents) {
             patienter.add(document.toObject(PatientImpl.class));
@@ -105,26 +108,33 @@ public class FirebaseDAOImpl implements DAO {
         if (this.db == null) {
             this.db = hentDatabase();
         }
+        //vi henter vores forloeb collection og en query af alle de forloeb som har en behandler som matcher vores parameter
         CollectionReference cr = db.collection("Forloeb");
+        //vi finder nu det forloeb hvor patienten matcher
         Query query = cr.whereEqualTo("patientEmail", patient.getEmail());
         ApiFuture<QuerySnapshot> futureQuery = query.get();
         List<DocumentSnapshot> documents = futureQuery.get().getDocuments();
         ArrayList<Forloeb> forloeb = new ArrayList<>();
+        //vi henter forloebet fra listen og returnere det til sidst
         for (DocumentSnapshot document : documents) {
             forloeb.add(castDocumentSnapshotToForloeb(document));
         }
         return forloeb.get(0);
     }
 
+    //denne metode eksistere fordi, at vi i vores unit test ikke skal caste den til ForloebImpl men til MockForloeb. Denne metode bliver altsaa overridet i unittesten.
     public Forloeb castDocumentSnapshotToForloeb(DocumentSnapshot documentSnapshot){
         return documentSnapshot.toObject(ForloebImpl.class);
     }
 
     public Firestore hentDatabase() throws IOException {
+        //baseret på Firebase tutorial af google, saadan opretter man forbindelse til firestoren
+        //her finder vi vores json fil.
         InputStream serviceAccount = getClass().getResourceAsStream("/persistence/firebase/ServiceAccountKey.json");
         FirebaseOptions options = new FirebaseOptions.Builder().
                 setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();
+        //hvis vi allerede har forbindelse, så starte vi ikke appen igen. Hvis vi ikke har forbindelse så starter vi den.
         if (FirebaseApp.getApps().size() == 0) {
             FirebaseApp.initializeApp(options);
         }
