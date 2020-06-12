@@ -12,7 +12,7 @@ Man skal huske at vælge gradle inden man fortsætter:
 
 ![gradle](https://user-images.githubusercontent.com/54975711/84480561-07409900-ac95-11ea-84ae-82ecd6271eb2.png)
 
-Derefter skal man finde build.gradle under 04 implementation og importere gradle project:
+Derefter skal man finde build.gradle under 04 implementation, højre klikke og importere gradle project:
 
 ![build.gradle](https://user-images.githubusercontent.com/54975711/84480557-06a80280-ac95-11ea-805f-3cb183f43667.png)
 
