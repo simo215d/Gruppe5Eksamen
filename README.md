@@ -1,5 +1,5 @@
 # Gruppe5Eksamen
-Lavet af Matias, Simon, Lukas og Laila
+Lavet af Matias og Simon
 
 
 Følgende er hvordan man åbner og kører programmet med intellij
