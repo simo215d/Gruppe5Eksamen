@@ -8,7 +8,7 @@ Først skal man clone det fra github og lave et nyt projekt fra version control:
 ![GitHub](https://user-images.githubusercontent.com/54975711/84480566-0871c600-ac95-11ea-811f-c87fe6da8fff.png)
 ![version control](https://user-images.githubusercontent.com/54975711/84480563-07d92f80-ac95-11ea-956f-ac56f9e0d4c3.png)
 
-Man skal huske at vælge gradle og finish:
+Man skal huske at vælge gradle inden man fortsætte:
 
 ![gradle](https://user-images.githubusercontent.com/54975711/84480561-07409900-ac95-11ea-84ae-82ecd6271eb2.png)
 
