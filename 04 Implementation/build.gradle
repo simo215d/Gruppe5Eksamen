@@ -19,7 +19,7 @@ test {
 
 
 dependencies {
-    compile ('com.google.firebase:firebase-admin:5.5.0') {
+    compile ('com.google.firebase:firebase-admin:6.3.0') {
         exclude group: 'com.google.guava'
     }
     compile 'com.google.guava:guava:23.0'

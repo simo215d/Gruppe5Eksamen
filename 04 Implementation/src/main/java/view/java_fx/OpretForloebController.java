@@ -10,8 +10,10 @@ import model.datastrukture.PatientImpl;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class OpretForloebController extends MenuController {
+public class OpretForloebController extends MenuController implements Observer {
     private Main main;
     private Stage stage;
     //fxml elements
@@ -20,8 +22,10 @@ public class OpretForloebController extends MenuController {
     private ArrayList<Behandler> behandlere;
     private ArrayList<Patient> patienter;
 
-    public void load(Main main, Stage stage){
+    public void load(Main main, Stage stage) throws IOException {
         //setting references
+        Main.viewModel.listenToUserChange();
+        Main.viewModel.observeFirebase(this);
         this.stage=stage;
         this.main = main;
         behandlercombobox = (ComboBox<String>) stage.getScene().lookup("#behandlercombobox");
@@ -70,5 +74,10 @@ public class OpretForloebController extends MenuController {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        System.out.println("it Works hello im the observer");
     }
 }

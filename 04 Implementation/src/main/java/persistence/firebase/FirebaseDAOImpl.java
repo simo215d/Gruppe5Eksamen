@@ -6,6 +6,7 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import com.google.firebase.internal.Nullable;
 import model.datastrukture.*;
 import model.exceptions.BehandlerManglerException;
 import model.exceptions.PatientErAlleredeIForloebException;
@@ -16,10 +17,43 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.concurrent.ExecutionException;
 
-public class FirebaseDAOImpl implements DAO {
+public class FirebaseDAOImpl extends Observable implements DAO {
     private Firestore db;
+
+    public void listenToUserChange() throws IOException {
+        if (this.db == null) {
+            this.db = hentDatabase();
+        }
+        System.out.println("hi we are now observing poo poo");
+        CollectionReference behRef = db.collection("Behandlere");
+        behRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirestoreException error) {
+                System.out.println("Something changed: ");
+                for (DocumentSnapshot doc : value.getDocuments()){
+                    System.out.println("Behandler: "+doc.toObject(BehandlerImpl.class).getEmail());
+                }
+                System.out.println("-----");
+            }
+        });
+        CollectionReference patRef = db.collection("Patienter");
+        patRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirestoreException error) {
+                System.out.println("Something changed: ");
+                for (DocumentSnapshot doc : value.getDocuments()){
+                    System.out.println("Patient: "+doc.toObject(PatientImpl.class).getEmail());
+                }
+                System.out.println("-----");
+            }
+        });
+        setChanged();
+        notifyObservers();
+    }
+
     @Override
     public void opretForloeb(Behandler behandler, Patient patient) throws BehandlerManglerException,
             PatientManglerException, IOException, PatientErAlleredeIForloebException,
@@ -59,7 +93,7 @@ public class FirebaseDAOImpl implements DAO {
         CollectionReference cr = db.collection("Patienter");
         Query query = cr.whereEqualTo("erIForloeb",erIForloeb);
         ApiFuture<QuerySnapshot> futureQuery = query.get();
-        List<DocumentSnapshot> documents = futureQuery.get().getDocuments();
+        List<QueryDocumentSnapshot> documents = futureQuery.get().getDocuments();
         // Her laver vi en arraylist og tilføjer patienterne til arraylisten en efter en.
         ArrayList<Patient> patienter = new ArrayList<>();
         for (DocumentSnapshot document : documents) {
@@ -76,7 +110,7 @@ public class FirebaseDAOImpl implements DAO {
         // Her bruger vi databasen til at finde alle patienter som enten er, eller ikke er i et forløb baseret på parametret.
         CollectionReference cr = db.collection("Behandlere");
         ApiFuture<QuerySnapshot> futureQuery = cr.get();
-        List<DocumentSnapshot> documents = futureQuery.get().getDocuments();
+        List<QueryDocumentSnapshot> documents = futureQuery.get().getDocuments();
         // Her laver vi en arraylist og tilføjer patienterne til arraylisten en efter en.
         ArrayList<Behandler> behandlere = new ArrayList<>();
         for (DocumentSnapshot document : documents) {
@@ -94,7 +128,7 @@ public class FirebaseDAOImpl implements DAO {
         CollectionReference cr = db.collection("Forloeb");
         Query query = cr.whereEqualTo("behandler", behandler);
         ApiFuture<QuerySnapshot> futureQuery = query.get();
-        List<DocumentSnapshot> documents = futureQuery.get().getDocuments();
+        List<QueryDocumentSnapshot> documents = futureQuery.get().getDocuments();
         //vi laver nu en liste af de patienter som findes i de forloeb som matchede behandleren
         ArrayList<Patient> patienter = new ArrayList<>();
         for (DocumentSnapshot document : documents) {
@@ -113,7 +147,7 @@ public class FirebaseDAOImpl implements DAO {
         //vi finder nu det forloeb hvor patienten matcher
         Query query = cr.whereEqualTo("patientEmail", patient.getEmail());
         ApiFuture<QuerySnapshot> futureQuery = query.get();
-        List<DocumentSnapshot> documents = futureQuery.get().getDocuments();
+        List<QueryDocumentSnapshot> documents = futureQuery.get().getDocuments();
         ArrayList<Forloeb> forloeb = new ArrayList<>();
         //vi henter forloebet fra listen og returnere det til sidst
         for (DocumentSnapshot document : documents) {

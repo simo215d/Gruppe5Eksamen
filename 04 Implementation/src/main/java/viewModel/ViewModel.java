@@ -10,6 +10,7 @@ import persistence.firebase.FirebaseDAOImpl;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Observer;
 import java.util.concurrent.ExecutionException;
 
 public class ViewModel {
@@ -37,5 +38,15 @@ public class ViewModel {
 
     public void opretBruger(String cpr, String fornavn, String efternavn, String mobil, String telefon, String email, boolean erBehandler) throws ExecutionException, InterruptedException, IOException {
         firebaseDAO.opretBruger(cpr,fornavn,efternavn,mobil,telefon,email,erBehandler);
+    }
+
+    public void listenToUserChange() throws IOException {
+        ((FirebaseDAOImpl)firebaseDAO).listenToUserChange();
+    }
+
+    public void observeFirebase(Observer o){
+        System.out.println(((FirebaseDAOImpl)firebaseDAO).countObservers());
+        ((FirebaseDAOImpl)firebaseDAO).addObserver(o);
+        System.out.println(((FirebaseDAOImpl)firebaseDAO).countObservers());
     }
 }
