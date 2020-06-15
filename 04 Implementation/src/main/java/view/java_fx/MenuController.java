@@ -44,6 +44,17 @@ public abstract class MenuController {
         opretForloebController.load(main, primaryStage);
     }
 
+    public void opretBruger(ActionEvent event) throws IOException, ExecutionException, InterruptedException {
+        //Parent root = new FXMLLoader(getClass().getResource("/view/java_fx/OpretForloeb.fxml")).load();
+        //use fxml loader to get elements associated with the fxml file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/java_fx/OpretBruger.fxml"));
+        Parent root = loader.load();
+        OpretBrugerController opretBrugerController = loader.getController();
+        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        primaryStage.setScene(new Scene(root));
+        opretBrugerController.load(main, primaryStage);
+    }
+
     public void setMain(Main main){
         this.main = main;
     }

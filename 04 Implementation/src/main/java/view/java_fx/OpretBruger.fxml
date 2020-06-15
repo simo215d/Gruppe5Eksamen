@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.java_fx.OpretBrugerController">
+    <children>
+        <VBox id="menuvbox" layoutY="40.0" prefHeight="361.0" prefWidth="120.0">
+            <children>
+                <Button id="forsidebtn" mnemonicParsing="false" onAction="#forside" prefHeight="26.0" prefWidth="137.0" text="Forside" />
+                <Button id="opretbrugerbtn" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="133.0" text="Opret bruger" />
+                <Button id="logindbtn" layoutX="10.0" layoutY="36.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="149.0" text="Log ind" />
+                <Button id="opretforloebbtn" layoutX="10.0" layoutY="62.0" mnemonicParsing="false" onAction="#opretForloeb" prefHeight="26.0" prefWidth="134.0" text="Opret forløb" />
+                <Button id="mineforloebbtn" layoutX="10.0" layoutY="88.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="Mine forløb" />
+                <Button id="testbtn" layoutX="10.0" layoutY="114.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" text="Test" />
+                <Button id="traeningsprogrambtn" layoutX="10.0" layoutY="140.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="154.0" text="Træningsprogram" />
+            </children>
+        </VBox>
+        <Label id="opretBrugerLabel" fx:id="opretBrugerLabel" layoutX="257.0" layoutY="57.0" text="Opret Bruger">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+        <ImageView id="headerimage" fitHeight="42.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="https://user-images.githubusercontent.com/54975711/83849981-8d4a6600-a710-11ea-8766-53cbc45e50a5.png" />
+        </ImageView>
+      <VBox layoutX="255.0" layoutY="95.0" prefHeight="239.0" prefWidth="120.0">
+         <children>
+            <Label fx:id="cPRl" prefHeight="17.0" prefWidth="126.0" text="CPR-nr:" />
+            <TextField fx:id="cPRTF" />
+            <Label fx:id="fornavnl" prefHeight="17.0" prefWidth="172.0" text="Fornavn" />
+            <TextField fx:id="fornavnTF" />
+            <Label fx:id="efterNavnl" prefHeight="17.0" prefWidth="282.0" text="Efternavn" />
+            <TextField fx:id="efterNavnTF" />
+            <Label fx:id="telefonl" prefHeight="17.0" prefWidth="310.0" text="Telefon" />
+            <TextField fx:id="telefonTF" />
+            <Label fx:id="Mobill" prefHeight="17.0" prefWidth="360.0" text="Mobil" />
+            <TextField fx:id="mobilTF" />
+            <Label fx:id="emaill" prefHeight="17.0" prefWidth="459.0" text="Email" />
+            <TextField fx:id="emailTF" />
+         </children>
+      </VBox>
+      <Button fx:id="opretPatientBtn" layoutX="214.0" layoutY="362.0" mnemonicParsing="false" onAction="#opretBruger" text="Opret Patient" />
+      <Button fx:id="opretnBehandlerBtn" layoutX="323.0" layoutY="362.0" mnemonicParsing="false" onAction="#opretBruger" text="Opret Behandler" />
+    </children>
+</AnchorPane>

@@ -34,4 +34,8 @@ public class ViewModel {
     public ArrayList<Behandler> hentBehandlere() throws InterruptedException, ExecutionException, IOException {
         return firebaseDAO.hentBehandlere();
     }
+
+    public void opretBruger(String cpr, String fornavn, String efternavn, String mobil, String telefon, String email, boolean erBehandler) throws ExecutionException, InterruptedException, IOException {
+        firebaseDAO.opretBruger(cpr,fornavn,efternavn,mobil,telefon,email,erBehandler);
+    }
 }

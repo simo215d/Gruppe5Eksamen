@@ -6,6 +6,11 @@ public class BehandlerImpl implements Behandler {
     private String navn;
     private String email;
 
+    public BehandlerImpl(String navn, String email){
+        this.navn = navn;
+        this.email = email;
+    }
+
     @Override
     public String getEmail() {
         return email;

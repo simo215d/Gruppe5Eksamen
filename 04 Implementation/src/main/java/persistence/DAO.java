@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public interface DAO {
-    public void opretForloeb(Behandler behandler, Patient patient) throws BehandlerManglerException, PatientManglerException, IOException, PatientErAlleredeIForloebException, ExecutionException, InterruptedException;
+    public void opretForloeb(Behandler behandler, Patient patient) throws BehandlerManglerException, PatientManglerException,
+            IOException, PatientErAlleredeIForloebException, ExecutionException, InterruptedException;
     public Forloeb newForloeb(Behandler behandler, Patient patient);
     public ArrayList<Patient> hentPatienter(boolean erIForloeb) throws ExecutionException, InterruptedException, IOException;
     public ArrayList<Behandler> hentBehandlere() throws ExecutionException, InterruptedException, IOException;
     public ArrayList<Patient> hentForloeb(Behandler behandler) throws IOException, ExecutionException, InterruptedException;
     public Forloeb hentForloeb(Patient patient) throws IOException, ExecutionException, InterruptedException;
+    void opretBruger(String cpr, String fornavn, String efternavn, String mobil, String telefon, String email, boolean erBehandler) throws ExecutionException, InterruptedException, IOException;
 }

@@ -127,6 +127,27 @@ public class FirebaseDAOImpl implements DAO {
         return documentSnapshot.toObject(ForloebImpl.class);
     }
 
+    @Override
+    public void opretBruger(String cpr, String fornavn, String efternavn, String mobil, String telefon, String email, boolean erBehandler) throws ExecutionException, InterruptedException, IOException {
+        // Hvis ikke vi har en connection til databasen så bliver den oprettet her.
+        if (this.db == null) {
+            this.db = hentDatabase();
+        }
+
+        if (erBehandler) {
+            Behandler behandler = new BehandlerImpl(fornavn,email);
+            CollectionReference cr = db.collection("Behandlere");
+            DocumentReference document = cr.document(behandler.getEmail());
+            document.set(behandler).get();
+        }
+        if (!erBehandler) {
+            Patient patient = new PatientImpl(fornavn,email);
+            CollectionReference cr = db.collection("Patienter");
+            DocumentReference document = cr.document(patient.getEmail());
+            document.set(patient).get();
+        }
+    }
+
     public Firestore hentDatabase() throws IOException {
         //baseret på Firebase tutorial af google, saadan opretter man forbindelse til firestoren
         //her finder vi vores json fil.
