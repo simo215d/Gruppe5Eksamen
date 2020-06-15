@@ -6,6 +6,8 @@ public class BehandlerImpl implements Behandler {
     private String navn;
     private String email;
 
+    public BehandlerImpl(){}
+
     public BehandlerImpl(String navn, String email){
         this.navn = navn;
         this.email = email;

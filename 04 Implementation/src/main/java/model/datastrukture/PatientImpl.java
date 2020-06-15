@@ -7,6 +7,8 @@ public class PatientImpl implements Patient {
     private boolean erIForloeb;
     private String email;
 
+    public PatientImpl(){}
+
     public PatientImpl(String navn, String email){
         this.navn = navn;
         this.email = email;
