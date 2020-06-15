@@ -1,5 +1,6 @@
 package view.java_fx;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-public class OpretForloebController extends MenuController implements Observer {
+public class OpretForloebController extends MenuController {
     private Main main;
     private Stage stage;
     //fxml elements
@@ -25,23 +26,46 @@ public class OpretForloebController extends MenuController implements Observer {
     public void load(Main main, Stage stage) throws IOException {
         //setting references
         Main.viewModel.listenToUserChange();
-        Main.viewModel.observeFirebase(this);
+        Main.viewModel.observeFirebase(new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        setBehandlere();
+                    }
+                });
+                System.out.println("OBSERVER UPDATED: behandlere");
+            }
+        });
+        Main.viewModel.observeFirebase(new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        setPatienter();
+                    }
+                });
+                System.out.println("OBSERVER UPDATED: patienter");
+            }
+        });
         this.stage=stage;
         this.main = main;
         behandlercombobox = (ComboBox<String>) stage.getScene().lookup("#behandlercombobox");
         patientcombobox = (ComboBox<String>) stage.getScene().lookup("#patientcombobox");
         //loading combobox info
-        setBehandlere();
-        setPatienter();
+        //setBehandlere();
+        //setPatienter();
     }
 
     //TODO VIEW MODEL SKAL BRUGES NU :!:!:!!::!!
     private void setBehandlere() {
+        behandlercombobox.getItems().clear();
         try {
-            //behandlere = main.getFirebaseDAO().hentBehandlere();
             behandlere = Main.viewModel.hentBehandlere();
             for (Behandler behandler : behandlere){
-                System.out.println("BEHANDLER LOADED: "+behandler.getEmail());
+                //System.out.println("BEHANDLER LOADED: "+behandler.getEmail());
                 behandlercombobox.getItems().add(behandler.getNavn());
                 behandlercombobox.getSelectionModel().select(behandlere.get(0).getNavn());
             }
@@ -51,11 +75,11 @@ public class OpretForloebController extends MenuController implements Observer {
     }
 
     private void setPatienter(){
+        patientcombobox.getItems().clear();
         try {
-            //patienter = main.getFirebaseDAO().hentPatienter(false);
             patienter = Main.viewModel.hentPatienter(false);
             for (Patient patient : patienter){
-                System.out.println("PATIENT LOADED: "+patient.getEmail());
+                //System.out.println("PATIENT LOADED: "+patient.getEmail());
                 patientcombobox.getItems().add(patient.getNavn());
             }
             patientcombobox.getSelectionModel().select(patienter.get(0).getNavn());
@@ -74,10 +98,5 @@ public class OpretForloebController extends MenuController implements Observer {
         } catch (Exception e){
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void update(Observable observable, Object o) {
-        System.out.println("it Works hello im the observer");
     }
 }

@@ -22,6 +22,7 @@ import java.util.concurrent.ExecutionException;
 
 public class FirebaseDAOImpl extends Observable implements DAO {
     private Firestore db;
+    private static boolean firstUpdate = true;
 
     public void listenToUserChange() throws IOException {
         if (this.db == null) {
@@ -34,9 +35,15 @@ public class FirebaseDAOImpl extends Observable implements DAO {
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirestoreException error) {
                 System.out.println("Something changed: ");
                 for (DocumentSnapshot doc : value.getDocuments()){
-                    System.out.println("Behandler: "+doc.toObject(BehandlerImpl.class).getEmail());
+                    System.out.println("Behandler: "+doc.toObject(BehandlerImpl.class).getNavn());
                 }
                 System.out.println("-----");
+                System.out.println("im now notifying my observers :)");
+                if (!firstUpdate) {
+                    setChanged();
+                    notifyObservers();
+                }
+                System.out.println("im done notifying em behandlers");
             }
         });
         CollectionReference patRef = db.collection("Patienter");
@@ -45,13 +52,16 @@ public class FirebaseDAOImpl extends Observable implements DAO {
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirestoreException error) {
                 System.out.println("Something changed: ");
                 for (DocumentSnapshot doc : value.getDocuments()){
-                    System.out.println("Patient: "+doc.toObject(PatientImpl.class).getEmail());
+                    System.out.println("Patient: "+doc.toObject(PatientImpl.class).getNavn());
                 }
                 System.out.println("-----");
+                System.out.println("im now notifying my observers :)");
+                setChanged();
+                notifyObservers();
+                firstUpdate = false;
+                System.out.println("im done notifying em dumb patients");
             }
         });
-        setChanged();
-        notifyObservers();
     }
 
     @Override
