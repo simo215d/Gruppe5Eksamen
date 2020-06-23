@@ -1,13 +1,12 @@
 package view.java_fx;
 
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import model.datastrukture.Behandler;
-import model.datastrukture.BehandlerImpl;
 import model.datastrukture.Patient;
-import model.datastrukture.PatientImpl;
 
 import java.io.IOException;
 import java.util.ArrayList;

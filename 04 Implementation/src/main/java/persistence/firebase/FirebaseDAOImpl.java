@@ -117,11 +117,11 @@ public class FirebaseDAOImpl extends Observable implements DAO {
         if (this.db == null) {
             this.db = hentDatabase();
         }
-        // Her bruger vi databasen til at finde alle patienter som enten er, eller ikke er i et forløb baseret på parametret.
+        // Her bruger vi databasen til at finde alle behandlere.
         CollectionReference cr = db.collection("Behandlere");
         ApiFuture<QuerySnapshot> futureQuery = cr.get();
         List<QueryDocumentSnapshot> documents = futureQuery.get().getDocuments();
-        // Her laver vi en arraylist og tilføjer patienterne til arraylisten en efter en.
+        // Her laver vi en arraylist og tilføjer behandlerne til arraylisten en efter en.
         ArrayList<Behandler> behandlere = new ArrayList<>();
         for (DocumentSnapshot document : documents) {
             behandlere.add(document.toObject(BehandlerImpl.class));
