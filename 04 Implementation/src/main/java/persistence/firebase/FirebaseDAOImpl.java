@@ -28,38 +28,37 @@ public class FirebaseDAOImpl extends Observable implements DAO {
         if (this.db == null) {
             this.db = hentDatabase();
         }
-        System.out.println("hi we are now observing poo poo");
+        //reference til vores collection i firestore
         CollectionReference behRef = db.collection("Behandlere");
+        //vi lytter til ændringer angående den collection reference
         behRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirestoreException error) {
-                System.out.println("Something changed: ");
+                System.out.println("behandlere changed: ");
                 for (DocumentSnapshot doc : value.getDocuments()){
                     System.out.println("Behandler: "+doc.toObject(BehandlerImpl.class).getNavn());
                 }
                 System.out.println("-----");
-                System.out.println("im now notifying my observers :)");
                 if (!firstUpdate) {
                     setChanged();
                     notifyObservers();
                 }
-                System.out.println("im done notifying em behandlers");
             }
         });
+        //reference til vores collection i firestore
         CollectionReference patRef = db.collection("Patienter");
+        //vi lytter til ændringer angående den collection reference
         patRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirestoreException error) {
-                System.out.println("Something changed: ");
+                System.out.println("patienter changed: ");
                 for (DocumentSnapshot doc : value.getDocuments()){
                     System.out.println("Patient: "+doc.toObject(PatientImpl.class).getNavn());
                 }
                 System.out.println("-----");
-                System.out.println("im now notifying my observers :)");
                 setChanged();
                 notifyObservers();
                 firstUpdate = false;
-                System.out.println("im done notifying em dumb patients");
             }
         });
     }
