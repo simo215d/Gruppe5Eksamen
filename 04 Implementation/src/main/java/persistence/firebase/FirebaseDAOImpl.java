@@ -39,6 +39,7 @@ public class FirebaseDAOImpl extends Observable implements DAO {
                     System.out.println("Behandler: "+doc.toObject(BehandlerImpl.class).getNavn());
                 }
                 System.out.println("-----");
+                //sørger for, at vi ikke kalder vores ui om, at opdatere 2 gange når vi starter op
                 if (!firstUpdate) {
                     setChanged();
                     notifyObservers();
@@ -58,6 +59,7 @@ public class FirebaseDAOImpl extends Observable implements DAO {
                 System.out.println("-----");
                 setChanged();
                 notifyObservers();
+                //vi tillader den anden listener at notificere ui laget.
                 firstUpdate = false;
             }
         });
